@@ -1,6 +1,0 @@
-
-sbatch ./sh/CV.sh 
-
-
-
-
