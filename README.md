@@ -47,9 +47,7 @@ If you are not sure about the path of your working folder, try to type in 'pwd' 
 ## Before you start
 1. Decide the path of [Tumor_Survival] to replicate our results;
 
-2. All raw datasets are in subdirectory **Datasets** at [Tumor_Survival]. The following figure shows the 23 datasets and the **Links.xlsx** contains the link between every dataset number and its downloaded link. You can download the datasets from [https://data.projectdatasphere.org/projectdatasphere/html/home], open the page and in in search bar paste the Study ID as mentioned in the **Links.xlsx**. The following figure shows the subdirectories **Datasets**:
-
-3. In the **Tumor_Survival**, use the following commands to load R/4.1.0 language in Compute Canada (make sure to check and use their latest settings):
+2. In the **Tumor_Survival**, use the following commands to load R/4.1.0 language in Compute Canada (make sure to check and use their latest settings):
 
 ~~~
 module load gcc/9.3.0 r/4.1.0
@@ -57,7 +55,7 @@ mkdir -p ~/.local/R/$EBVERSIONR/
 export R_LIBS=~/.local/R/$EBVERSIONR/
 ~~~
 
-4. Before we run the .sh files, we use the commands in R (version 4.1.0) to install some R packages needed for the task, as below:
+3. Before we run the .sh files, we use the commands in R (version 4.1.0) to install some R packages needed for the task, as below:
 
 ~~~
  install.packages(c('dbplyr','haven','glmnet','ggplot2','ggpubr','caret','lubridate', 'Matrix','pROC', 'broom', 'ggstatsplot', 'forestplot', 'fs', 'purrr', 'fastmatch', 'gtsummary', 'rpart', 'rpart.plot', 'ISLR', 'survminer', 'survival', 'qpcR', 'rlist', 'reshape2'))
@@ -79,7 +77,7 @@ sessionInfo()
 - If you want to use the .sh file, always submit your job under [Tumor_Survival] instead of any of the subdirectory.
 ---
 
-<details><summary>1. 10-foldCV.R estimated time 00:20:00</summary>
+<details><summary> 10-foldCV.R estimated time 00:20:00</summary>
 
  - Reading the raw datasets from [Tumor_Survival/Datasets];
  
@@ -105,7 +103,7 @@ sessionInfo()
 
  ~~~
   
-  <details><summary>2.4. OS-method1.R with estimated time 00:00:52</summary>
+  <details><summary> OS-method1.R with estimated time 00:00:52</summary>
    
    - Reading the raw datasets from [Tumor_Survival/Datasets] and also **alldata** data frames;
    
