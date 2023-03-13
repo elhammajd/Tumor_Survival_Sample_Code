@@ -12,4 +12,5 @@
 #SBATCH --mem-per-cpu=4G # 2GiB of memery 
 #SBATCH -t 0-04:00 
 Rscript ./code/CV.R; 
-Rscript  ./code/OS-method1.R;
+Rscript ./code/OS-method1.R;
+Rscript ./WilcoxonTests-Fig3.R
