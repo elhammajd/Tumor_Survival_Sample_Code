@@ -13,10 +13,19 @@ You can download the datasets from [Project Data Sphere](https://data.projectdat
 
 ## Repository Structure
 
-. ├── README.md ├── R │ ├── 6CV_ensemble.R # Ensemble model with 10-fold CV for Dataset 6 │ ├── 6WithoutCV_ensemble.R # Standard GLM (non-ensemble) for Dataset 6 │ ├── 7CV_ensemble.R # Ensemble model with 10-fold CV for Dataset 7 │ ├── 7WithoutCV_ensemble.R # Standard GLM (non-ensemble) for Dataset 7 │ └── OS_and_Tests.R # OS integration, segmentation, survival analysis, and test results ├── cvresults # Folder for CSV output files ├── Figures # Folder for saved figures (e.g., boxplots, forest plots) └── Datasets # Raw datasets and supplemental files ├── Links.xlsx # Excel file linking dataset numbers with download URLs ├── [Tumor_Survival] # Contains 23 datasets (e.g., 6, 7, etc.) ├── 6 │ ├── demog.sas7bdat │ ├── measur.sas7bdat │ └── ae.sas7bdat └── 7 ├── demog.sas7bdat ├── measur.sas7bdat ├── ae.sas7bdat └── resples.sas7bdat
+├── README.md 
 
-scss
-Copy
+├── Code
+
+│ ├── 6CV_ensemble.R # Ensemble model with 10-fold CV for Dataset 6 
+
+│ ├── 6WithoutCV_ensemble.R # Standard GLM (non-ensemble) for Dataset 6 
+
+│ ├── 7CV_ensemble.R # Ensemble model with 10-fold CV for Dataset 7 
+
+│ ├── 7WithoutCV_ensemble.R # Standard GLM (non-ensemble) for Dataset 7 
+
+│ └── OS_and_Tests.R # OS integration, segmentation, survival analysis, and test results 
 
 ## Requirements
 
