@@ -1,128 +1,70 @@
+# Predicting Tumor Response and Overall Survival
 
- # Predicting Tumor Response and Overall Survival 
----
+This repository contains R scripts for processing clinical trial data to predict the Best Overall Response (BOR) and overall survival (OS) using two approaches:
+1. **Ensemble Modeling with Cross-Validation** (using logistic regression, random forest, and SVM)
+2. **Standard Modeling without Cross-Validation** (GLM only)
 
-## About this Project
+The scripts also merge OS data with prediction results, segment patients, perform survival analysis (including Cox regression and Kaplan–Meier analysis), generate forest plots for C-index, and conduct Wilcoxon tests.
 
-The scripts are not for implementing the project. Scripts are sample presented codes to compute CV and OS in R.
+## Raw Datasets and Links
 
----
-We assume the user set the default directory at **Narval** at Compute Canada
-~~~
-    Tumor_Survival 
-~~~
-All the R codes are in the subdirectory at **code** 
-~~~
-    Tumor_Survival/code  
-~~~
-All the .sh files that run the R files are in the subdirectory directory at **sh** 
-~~~
-    Tumor_Survival/sh  
-~~~
-All the log files are in the subdirectory directory at **rout** 
-~~~
-    Tumor_Survival/rout  
-~~~
-All the final prediction results/intermediate results are in **Tumor_Survival**.
-The name of subdirectories are deteremined in the following parts. 
-One example of the subdirectory is:
-~~~
-    Tumor_Survival/Osmethod1
-~~~
+All raw datasets are in the subdirectory **Datasets** at `[Tumor_Survival]`. The repository includes a figure that shows the 23 datasets and a **Links.xlsx** file that contains the link between every dataset number and its download link.  
+You can download the datasets from [Project Data Sphere](https://data.projectdatasphere.org/projectdatasphere/html/home). Open the page and in the search bar paste the Study ID as mentioned in **Links.xlsx**.
 
----
-## Notice
+## Repository Structure
 
-As all the processes are conducted using the relative path, it's very important to set up [Tumor_Survival] and use it correctly. 
-[Tumor_Survival] should be consisted of three parts: part 1 is ```project/6003581/``` to ensure all the files can run on Compute Canada; part 2 is your ```user name``` at Compute Canada; part 3 is your ```folder's name```. For example, the writer's directory is as follows:
+. ├── README.md ├── R │ ├── 6CV_ensemble.R # Ensemble model with 10-fold CV for Dataset 6 │ ├── 6WithoutCV_ensemble.R # Standard GLM (non-ensemble) for Dataset 6 │ ├── 7CV_ensemble.R # Ensemble model with 10-fold CV for Dataset 7 │ ├── 7WithoutCV_ensemble.R # Standard GLM (non-ensemble) for Dataset 7 │ └── OS_and_Tests.R # OS integration, segmentation, survival analysis, and test results ├── cvresults # Folder for CSV output files ├── Figures # Folder for saved figures (e.g., boxplots, forest plots) └── Datasets # Raw datasets and supplemental files ├── Links.xlsx # Excel file linking dataset numbers with download URLs ├── [Tumor_Survival] # Contains 23 datasets (e.g., 6, 7, etc.) ├── 6 │ ├── demog.sas7bdat │ ├── measur.sas7bdat │ └── ae.sas7bdat └── 7 ├── demog.sas7bdat ├── measur.sas7bdat ├── ae.sas7bdat └── resples.sas7bdat
 
-~~~
-/project/6003581/elhma/Tumor_Survival
+scss
+Copy
 
-~~~
+## Requirements
 
-If you are not sure about the path of your working folder, try to type in 'pwd' command in linux or 'getwd()' in R language for reference. 
+Install R (version 3.5 or above) and the following packages:
 
----
-## Before you start
-1. Decide the path of [Tumor_Survival] to replicate our results;
+- dplyr  
+- haven  
+- ggplot2  
+- ggpubr  
+- lubridate  
+- caret  
+- Matrix  
+- glmnet  
+- pROC  
+- broom  
+- randomForest  
+- e1071  
+- survival  
+- survminer  
+- rstatix  
+- ggstatsplot  
+- forestplot  
+- gtsummary  
 
-2. In the **Tumor_Survival**, use the following commands to load R/4.1.0 language in Compute Canada (make sure to check and use their latest settings):
+Install missing packages with:
+```r
+install.packages(c("dplyr", "haven", "ggplot2", "ggpubr", "lubridate", "caret", 
+                   "Matrix", "glmnet", "pROC", "broom", "randomForest", "e1071",
+                   "survival", "survminer", "rstatix", "ggstatsplot", "forestplot", "gtsummary"))
+How to Run
+Download the datasets as described above and place the SAS files in the appropriate folders (e.g., Datasets/6/, Datasets/7/).
 
-~~~
-module load gcc/9.3.0 r/4.1.0
-mkdir -p ~/.local/R/$EBVERSIONR/
-export R_LIBS=~/.local/R/$EBVERSIONR/
-~~~
+Open and run the R scripts from the R folder (the order is not critical; each script saves its output in the cvresults folder and figures in the Figures folder).
 
-3. Before we run the .sh files, we use the commands in R (version 4.1.0) to install some R packages needed for the task, as below:
+Review the output CSV files for performance metrics and generated figures for survival analysis and statistical tests.
 
-~~~
- install.packages(c('dbplyr','haven','glmnet','ggplot2','ggpubr','caret','lubridate', 'Matrix','pROC', 'broom', 'ggstatsplot', 'forestplot', 'fs', 'purrr', 'fastmatch', 'gtsummary', 'rpart', 'rpart.plot', 'ISLR', 'survminer', 'survival', 'qpcR', 'rlist', 'reshape2'))
- 
- pkgs <- c('dbplyr','haven','glmnet','ggplot2','ggpubr','caret','lubridate', 'Matrix','pROC', 'broom', 'ggstatsplot', 'forestplot', 'fs', 'purrr', 'fastmatch', 'gtsummary', 'rpart', 'rpart.plot', 'ISLR', 'survminer', 'survival','qpcR', 'rlist', 'reshape2')
- 
-lapply(pkgs, require, character.only = TRUE)
+Overview of Scripts
+6CV_ensemble.R
+Processes Dataset 6 using an ensemble modeling approach with 10-fold cross-validation.
 
-sessionInfo()
-~~~
- 
-5. Becuase of Append lines to a file, some files be clear at the begining of running. According to deleting those files and run the .sh files, all of the files will be created with accurate outcomes. 
-------
+6WithoutCV_ensemble.R
+Processes Dataset 6 using a standard GLM approach (without ensemble/CV).
 
-## Running files with estimated time
-      
-- It is not essential to use the .sh file becuase the estimated time per file is less than one hour. 
- 
-- If you want to use the .sh file, always submit your job under [Tumor_Survival] instead of any of the subdirectory.
----
+7CV_ensemble.R
+Processes Dataset 7 using an ensemble modeling approach with 10-fold cross-validation.
 
-<details><summary> 10-foldCV.R estimated time 00:20:00</summary>
+7WithoutCV_ensemble.R
+Processes Dataset 7 using a standard GLM approach (without ensemble/CV).
 
- - Reading the raw datasets from [Tumor_Survival/Datasets];
- 
- - Cleaning the data;
- 
- - Making the collapse data frames from dynamic tumor size for every dataset; 
- 
- - Calculating PCA for every dataset;
- 
- - Finding the best cut for every dataset;
- 
- - Predicting BOR for each dataset;
- 
- - Comuting the auc, misclassification, sensitivity, specificity, and coefficients;
- 
- - Results will be saved in the following folders:
- 
-  </details>
-  
- ~~~
-    ├── intermediate and final results are saved in following folders:
-    │ 	 └── CV # intermediate results
-
- ~~~
-  
-  <details><summary> OS-method1.R with estimated time 00:00:52</summary>
-   
-   - Reading the raw datasets from [Tumor_Survival/Datasets] and also **alldata** data frames;
-   
-   - Making the OS dataframes for each dataset;
-   
-  - Reading the mean of coefficients from folder Resultmethod1
-   
-  - Evaluating the score of each patients;
-   
-  - Segmenting the patients into bad and god group using best cut and score of each patiens;
- 
-  - Results will be saved in the following folders:
- 
-  </details>
-  
- ~~~
-    ├── intermediate and final results are saved in following folders:
-    │ 	 └── Osmethod1 # final results
- ~~~
- 
-
- 
+OS_and_Tests.R
+Merges OS data with prediction outputs, segments patients based on model scores, performs survival analysis (Cox regression, Kaplan–Meier), generates forest plots (C-index), and conducts Wilcoxon tests on performance metrics.
